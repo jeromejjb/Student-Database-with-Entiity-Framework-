@@ -133,7 +133,7 @@ namespace StudentDbwithEntity
 
         public static bool GetContinue()
         {
-            Console.WriteLine("Would you like to learn about anyone else? Y/N");
+            Console.WriteLine("Would you like to learn about or register anyone else? Y/N");
             string input = Console.ReadLine();
             if (input.Trim().ToLower() == "y")
             {
