@@ -54,13 +54,14 @@ namespace StudentDbwithEntity
 
         public static Student ChooseStudentById(List<Student> students)
         {
+            //Max needs to increase to add students to the index 
             Console.WriteLine("Please enter the ID of the Classmate whose info you would like to view:");
             int max = students.Count();
             int id = GetInteger(max);
             List<Student> queryResults = (from student in students
                                           where student.Id == id
                                           select student).ToList();
-            Student s = queryResults[0+id];
+            Student s = queryResults[0];
             return s;
         }
 
@@ -73,9 +74,8 @@ namespace StudentDbwithEntity
         public static void PrintStudentInfo(Student s)
         {
 
-            Console.WriteLine($"ID: {s.Id} \t Name:  {s.Fname} \t Hometown: {s.Hometown} \t Favorite Food: {s.Ffood}");
+            Console.WriteLine($"ID: {s.Id} \t Name:  {s.Fname} \t Favorite Food: {s.Hometown} \t Hometown: {s.Ffood}");
         }
-
 
         public static int GetInteger(int maxChoices)
         {
