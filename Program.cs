@@ -23,7 +23,11 @@ namespace StudentDbwithEntity
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine("1) Learn more about a current student"); 
                 Console.WriteLine("2) Register a new student");
-                int choice = GetInteger(2);
+                Console.WriteLine("3) Delete student from database");
+                int choice = GetInteger(3);
+                
+              
+
 
 
                 switch (choice)
@@ -36,6 +40,10 @@ namespace StudentDbwithEntity
                     case 2:
                         Console.WriteLine("Register a student");
                         AddStudent(db);
+                        break;
+                    case 3:
+                        Console.WriteLine("Delete a student");
+                        DeleteStudent(12,db);
                         break;
                 }
 
@@ -55,10 +63,16 @@ namespace StudentDbwithEntity
             PrintStudentInfo(student);
         }
 
+        public static List<Student> ReadInStudents(DbStudentsContext db)
+        {
+            List<Student> students = db.Students.ToList();
+            return students;
+        }
+
         public static Student ChooseStudentById(List<Student> students)
         {
             //Max needs to increase to add students to the index 
-            Console.WriteLine("Please enter the ID of the Classmate whose info you would like to view:");
+            Console.WriteLine("Please enter the ID of the Classmate:");
             int max = students.Count();
             int id = GetInteger(max);
             List<Student> queryResults = (from student in students
@@ -68,18 +82,18 @@ namespace StudentDbwithEntity
             return s;
         }
 
-        public static List<Student> ReadInStudents(DbStudentsContext db)
-        {
-            List<Student> students = db.Students.ToList();
-            return students;
-        }
+ 
 
         public static void PrintStudentInfo(Student s)
         {
 
             Console.WriteLine($"ID: {s.Id} \t Name:  {s.Fname} \t Favorite Food: {s.Hometown} \t Hometown: {s.Ffood}");
             Console.WriteLine();
+
+
+
         }
+
 
         public static int GetInteger(int maxChoices)
         {
@@ -148,6 +162,16 @@ namespace StudentDbwithEntity
                 Console.WriteLine("I don't understand that input. Please try again.");
                 return GetContinue();
             }
+        }
+
+
+        public static void DeleteStudent(int id, DbStudentsContext db)
+        {
+            
+            Student s = db.Students.Find(id);
+            db.Students.Remove(s);
+            db.SaveChanges();
+            Console.WriteLine($"{s.Fname} has been deleted from the course database");
         }
     }
 }
